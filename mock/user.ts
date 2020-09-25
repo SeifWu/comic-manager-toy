@@ -20,7 +20,7 @@ const getAccess = () => {
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 export default {
   // 支持值为 Object 和 Array
-  'GET /api/currentUser': (req: Request, res: Response) => {
+  'GET /api/v1/manager/currentUser': (req: Request, res: Response) => {
     if (!getAccess()) {
       res.status(401).send({
         data: {
@@ -33,55 +33,20 @@ export default {
       return;
     }
     res.send({
-      name: 'Serati Ma',
-      avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-      userid: '00000001',
-      email: 'antdesign@alipay.com',
-      signature: '海纳百川，有容乃大',
-      title: '交互专家',
-      group: '蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED',
-      tags: [
-        {
-          key: '0',
-          label: '很有想法的',
-        },
-        {
-          key: '1',
-          label: '专注设计',
-        },
-        {
-          key: '2',
-          label: '辣~',
-        },
-        {
-          key: '3',
-          label: '大长腿',
-        },
-        {
-          key: '4',
-          label: '川妹子',
-        },
-        {
-          key: '5',
-          label: '海纳百川',
-        },
-      ],
-      notifyCount: 12,
-      unreadCount: 11,
-      country: 'China',
-      access: getAccess(),
-      geographic: {
-        province: {
-          label: '浙江省',
-          key: '330000',
-        },
-        city: {
-          label: '杭州市',
-          key: '330100',
-        },
+      "data": {
+        "id": 3,
+        "createdAt": "2020-09-25T08:36:00Z",
+        "updatedAt": "2020-09-25T08:36:00Z",
+        "username": "admin",
+        "nickname": "admin",
+        "avatar": "",
+        "mobile": "",
+        "description": ""
       },
-      address: '西湖区工专路 77 号',
-      phone: '0752-268888888',
+      "errCode": "0",
+      "message": "登录成功",
+      "meta": null,
+      "success": true
     });
   },
   // GET POST 可省略
@@ -105,13 +70,24 @@ export default {
       address: 'Sidney No. 1 Lake Park',
     },
   ],
-  'POST /api/login/account': (req: Request, res: Response) => {
+  'POST /api/v1/manager/login': (req: Request, res: Response) => {
     const { password, username, type } = req.body;
     if (password === 'ant.design' && username === 'admin') {
       res.send({
-        status: 'ok',
-        type,
-        currentAuthority: 'admin',
+        "data": {
+          "id": 1,
+          "createdAt": "2020-09-25T08:36:00Z",
+          "updatedAt": "2020-09-25T08:36:00Z",
+          "username": "admin",
+          "nickname": "admin",
+          "avatar": "",
+          "mobile": "",
+          "description": ""
+        },
+        "errCode": "0",
+        "message": "登录成功",
+        "meta": null,
+        "success": true
       });
       access = 'admin';
       return;
