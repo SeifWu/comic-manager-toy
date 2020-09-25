@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Link, SelectLang, useModel } from 'umi';
 import { getPageQuery } from '@/utils/utils';
 import logo from '@/assets/logo.svg';
-import { LoginParamsType, fakeAccountLogin } from '@/services/login';
+import { LoginParamsType, accountLogin } from '@/services/login';
 import Footer from '@/components/Footer';
 import LoginFrom from './components/Login';
 import styles from './style.less';
@@ -58,8 +58,8 @@ const Login: React.FC<{}> = () => {
     setSubmitting(true);
     try {
       // 登录
-      const msg = await fakeAccountLogin({ ...values, type });
-      console.log(msg)
+      const msg = await accountLogin({ ...values, type });
+      console.log(msg, "msg")
       if (msg.errCode === "0") {
         message.success('登录成功！');
         replaceGoto();
@@ -76,7 +76,8 @@ const Login: React.FC<{}> = () => {
     setSubmitting(false);
   };
 
-  const { status, type: loginType } = userLoginState;
+  const { errCode, type: loginType } = userLoginState;
+  console.log(userLoginState)
 
   return (
     <div className={styles.container}>
@@ -97,7 +98,7 @@ const Login: React.FC<{}> = () => {
         <div className={styles.main}>
           <LoginFrom activeKey={type} onTabChange={setType} onSubmit={handleSubmit}>
             <Tab key="account" tab="账户密码登录">
-              {status === 'error' && loginType === 'account' && !submitting && (
+              {errCode !== '0' && loginType === 'account' && !submitting && (
                 <LoginMessage content="账户或密码错误（admin/ant.design）" />
               )}
 

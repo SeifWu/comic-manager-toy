@@ -1,7 +1,8 @@
 declare namespace API {
   export interface CurrentUser {
+    id?: string;
+    username?: string;
     avatar?: string;
-    name?: string;
     title?: string;
     group?: string;
     signature?: string;
@@ -9,13 +10,13 @@ declare namespace API {
       key: string;
       label: string;
     }[];
-    userid?: string;
     access?: 'user' | 'guest' | 'admin';
     unreadCount?: number;
   }
 
   export interface LoginStateType {
-    errCode: string;
+    errCode?: string;
+    success?: boolean;
   }
 
   export interface NoticeIconData {

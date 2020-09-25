@@ -8,7 +8,7 @@ export interface LoginParamsType {
   type: string;
 }
 
-export async function fakeAccountLogin(params: LoginParamsType) {
+export async function accountLogin(params: LoginParamsType) {
   return request<API.LoginStateType>('/api/v1/manager/login', {
     method: 'POST',
     data: params,
