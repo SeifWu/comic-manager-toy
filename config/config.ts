@@ -2,9 +2,7 @@
 import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
-
 const { REACT_APP_ENV } = process.env;
-
 export default defineConfig({
   hash: true,
   antd: {},
@@ -72,6 +70,12 @@ export default defineConfig({
     {
       path: '/',
       redirect: '/welcome',
+    },
+    {
+      name: '搜索列表（项目）',
+      icon: 'smile',
+      path: '/comic_crawler',
+      component: './ComicCrawler/ListSearch',
     },
     {
       component: './404',
