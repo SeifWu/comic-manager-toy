@@ -11,7 +11,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 const { Paragraph } = Typography;
 
 interface ListSearchProps {
-  dispatch: Dispatch<any>;
+  dispatch: Dispatch;
   comicCrawlerAndListSearch: StateType;
   loading: boolean;
 }
