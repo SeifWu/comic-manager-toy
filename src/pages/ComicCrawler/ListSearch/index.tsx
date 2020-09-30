@@ -1,12 +1,14 @@
 import { Card, List, Typography } from 'antd';
-import React, { FC } from 'react';
-import { connect, Dispatch } from 'umi';
+import React, { FC, useEffect } from 'react';
+import { connect, Dispatch, history, } from 'umi';
 import { SaveFilled, ReadFilled } from '@ant-design/icons';
 import { StateType } from './model';
 import { ListItemDataType } from './data.d';
 import ContainerContent from './components/ContainerContent';
 import styles from './style.less';
 import { PageContainer } from '@ant-design/pro-layout';
+
+import { getPageQuery } from '@/utils/utils'
 
 const { Paragraph } = Typography;
 
@@ -21,6 +23,16 @@ const ListSearch: FC<ListSearchProps> = ({
   comicCrawlerAndListSearch: { list = [] },
   loading,
 }) => {
+  const query = getPageQuery()
+  if (Object.keys(query).length) {
+    useEffect(() => {
+      dispatch({
+        type: 'comicCrawlerAndListSearch/fetch',
+        payload: query,
+      });
+    }, []);
+  }
+
   const cardList = list && (
     <List<ListItemDataType>
       rowKey="id"
@@ -63,12 +75,20 @@ const ListSearch: FC<ListSearchProps> = ({
     />
   );
 
-  const onSearch = (value: string) => dispatch({
-    type: 'comicCrawlerAndListSearch/fetch',
-    payload: {
+  const onSearch = (value: string) => {
+    const payload = {
       title: value
-    },
-  });
+    }
+    dispatch({
+      type: 'comicCrawlerAndListSearch/fetch',
+      payload,
+    });
+
+    history.replace({
+      pathname: history.location.pathname,
+      query: payload,
+    });
+  }
 
   const save = (url: string) => {
     console.log(url)
@@ -76,7 +96,7 @@ const ListSearch: FC<ListSearchProps> = ({
 
   return (
     <PageContainer
-      content={<ContainerContent onSearch={onSearch} />}
+      content={<ContainerContent defaultValue={query.title} onSearch={onSearch} />}
     >
       <div className={styles.coverCardList}>
         <Card>
