@@ -1,7 +1,8 @@
+import { message } from 'antd';
 import { Effect, Reducer } from 'umi';
 
 import { ListItemDataType } from './data.d';
-import { queryFakeList } from './service';
+import { queryFakeList, saveComic } from './service';
 
 export interface StateType {
   list: ListItemDataType[];
@@ -12,6 +13,7 @@ export interface ModelType {
   state: StateType;
   effects: {
     fetch: Effect;
+    save: Effect;
   };
   reducers: {
     queryList: Reducer<StateType>;
@@ -32,6 +34,16 @@ const Model: ModelType = {
         type: 'queryList',
         payload: Array.isArray(response.data) ? response.data : [],
       });
+    },
+
+    *save({ payload }, { call }) {
+      const response = yield call(saveComic, payload);
+
+      if (response.success) {
+        message.success(response.message)
+      } else {
+        message.error(response.message)
+      }
     },
   },
 

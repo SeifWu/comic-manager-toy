@@ -54,7 +54,7 @@ const ListSearch: FC<ListSearchProps> = ({
             hoverable
             cover={<img alt={item.title} style={{ objectFit: 'cover', maxHeight: "337px" }} src={item.cover} />}
             actions={[
-              <div onClick={() => save(item.url)}><SaveFilled /> 保存</div>,
+              <div onClick={() => save(item.id)}><SaveFilled /> 保存</div>,
               <div><ReadFilled /> 阅读(TODO)</div>
             ]}
           >
@@ -90,8 +90,13 @@ const ListSearch: FC<ListSearchProps> = ({
     });
   }
 
-  const save = (url: string) => {
-    console.log(url)
+  const save = (id: string) => {
+    dispatch({
+      type: 'comicCrawlerAndListSearch/save',
+      payload: {
+        id
+      },
+    });
   }
 
   return (
