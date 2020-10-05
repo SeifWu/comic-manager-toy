@@ -89,22 +89,22 @@ const Login: React.FC<{}> = () => {
           <div className={styles.header}>
             <Link to="/">
               <img alt="logo" className={styles.logo} src={logo} />
-              <span className={styles.title}>Ant Design</span>
+              <span className={styles.title}>Comic</span>
             </Link>
           </div>
-          <div className={styles.desc}>Ant Design 是西湖区最具影响力的 Web 设计规范</div>
+          <div className={styles.desc}>Comic Toy</div>
         </div>
 
         <div className={styles.main}>
           <LoginFrom activeKey={type} onTabChange={setType} onSubmit={handleSubmit}>
             <Tab key="account" tab="账户密码登录">
               {errCode !== '0' && loginType === 'account' && !submitting && (
-                <LoginMessage content="账户或密码错误（admin/ant.design）" />
+                <LoginMessage content="账户或密码错误" />
               )}
 
               <Username
                 name="username"
-                placeholder="用户名: admin or user"
+                placeholder="用户名"
                 rules={[
                   {
                     required: true,
@@ -114,7 +114,7 @@ const Login: React.FC<{}> = () => {
               />
               <Password
                 name="password"
-                placeholder="密码: ant.design"
+                placeholder="密码"
                 rules={[
                   {
                     required: true,
