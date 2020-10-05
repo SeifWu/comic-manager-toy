@@ -96,25 +96,25 @@ export const request: RequestConfig = {
   errorHandler,
   requestInterceptors: [
     (url, options: any) => {
-      const accessToken = localStorage.getItem("accessToken")
+      const accessToken = localStorage.getItem('accessToken');
 
       const headers = {
-        authorization: accessToken
+        authorization: accessToken,
       };
       return {
         url,
         options: { ...options, headers },
       };
-    }
+    },
   ],
   responseInterceptors: [
     // 获取保存 token
     (response, _options) => {
-      const accessToken = response.headers.get('x-token')
+      const accessToken = response.headers.get('x-token');
       if (accessToken) {
         localStorage.setItem('accessToken', accessToken);
       }
       return response;
     },
-  ]
+  ],
 };

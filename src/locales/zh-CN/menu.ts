@@ -50,5 +50,7 @@ export default {
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
 
-  'menu.comic_crawler.search-list': '搜索漫画'
+  'menu.comic_crawler.search-list': '搜索漫画',
+  'menu.comic.list': '漫画',
+  'menu.comic.show': '漫画详情',
 };

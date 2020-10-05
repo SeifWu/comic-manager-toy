@@ -1,10 +1,8 @@
 import { Card, List, Typography } from 'antd';
 import React, { FC, useEffect } from 'react';
 import { connect, Dispatch, history } from 'umi';
-import { SaveFilled, ReadFilled } from '@ant-design/icons';
-import { StateType } from './model';
-import { ListItemDataType } from './data.d';
-import ContainerContent from './components/ContainerContent';
+import { StateType } from '../model';
+import { ListItemDataType } from '../data.d';
 import styles from './style.less';
 import { PageContainer } from '@ant-design/pro-layout';
 
@@ -14,24 +12,18 @@ const { Paragraph } = Typography;
 
 interface ListSearchProps {
   dispatch: Dispatch;
-  comicCrawlerAndListSearch: StateType;
+  comic: StateType;
   loading: boolean;
 }
 
-const ListSearch: FC<ListSearchProps> = ({
-  dispatch,
-  comicCrawlerAndListSearch: { list = [] },
-  loading,
-}) => {
+const ListSearch: FC<ListSearchProps> = ({ dispatch, comic: { list = [] }, loading }) => {
   const query = getPageQuery();
-  if (Object.keys(query).length) {
-    useEffect(() => {
-      dispatch({
-        type: 'comicCrawlerAndListSearch/fetch',
-        payload: query,
-      });
-    }, []);
-  }
+  useEffect(() => {
+    dispatch({
+      type: 'comic/fetch',
+      payload: query,
+    });
+  }, []);
 
   const cardList = list && (
     <List<ListItemDataType>
@@ -54,22 +46,15 @@ const ListSearch: FC<ListSearchProps> = ({
             hoverable
             cover={
               <img
-                alt={item.title}
+                alt={item.name}
                 style={{ objectFit: 'cover', maxHeight: '337px' }}
                 src={item.cover}
               />
             }
-            actions={[
-              <div onClick={() => save(item.id)}>
-                <SaveFilled /> 保存
-              </div>,
-              <div>
-                <ReadFilled /> 阅读(TODO)
-              </div>,
-            ]}
+            onClick={() => read(item.id)}
           >
             <Card.Meta
-              title={<a>{item.title}</a>}
+              title={<a>{item.name}</a>}
               description={
                 <Paragraph className={styles.item} ellipsis={{ rows: 1 }}>
                   {item.latestChapter}
@@ -85,32 +70,12 @@ const ListSearch: FC<ListSearchProps> = ({
     />
   );
 
-  const onSearch = (value: string) => {
-    const payload = {
-      title: value,
-    };
-    dispatch({
-      type: 'comicCrawlerAndListSearch/fetch',
-      payload,
-    });
-
-    history.replace({
-      pathname: history.location.pathname,
-      query: payload,
-    });
-  };
-
-  const save = (id: string) => {
-    dispatch({
-      type: 'comicCrawlerAndListSearch/save',
-      payload: {
-        id,
-      },
-    });
+  const read = (id: string) => {
+    history.push(`/comics/${id}`);
   };
 
   return (
-    <PageContainer content={<ContainerContent defaultValue={query.title} onSearch={onSearch} />}>
+    <PageContainer>
       <div className={styles.coverCardList}>
         <Card>
           <div className={styles.cardList}>{cardList}</div>
@@ -121,14 +86,8 @@ const ListSearch: FC<ListSearchProps> = ({
 };
 
 export default connect(
-  ({
-    comicCrawlerAndListSearch,
-    loading,
-  }: {
-    comicCrawlerAndListSearch: StateType;
-    loading: { models: { [key: string]: boolean } };
-  }) => ({
-    comicCrawlerAndListSearch,
-    loading: loading.models.comicCrawlerAndListSearch,
+  ({ comic, loading }: { comic: StateType; loading: { models: { [key: string]: boolean } } }) => ({
+    comic,
+    loading: loading.models.comic,
   }),
 )(ListSearch);

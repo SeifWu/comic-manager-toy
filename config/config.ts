@@ -21,12 +21,10 @@ export default defineConfig({
     // default true, when it is true, will use `navigator.language` overwrite default
     baseNavigator: true,
   },
-  dynamicImport: {
-    loading: '@/components/PageLoading/index',
-  },
-  targets: {
-    ie: 11,
-  },
+  // dynamicImport:
+  // targets: {
+  //   ie: 11,
+  // },
   // umi routes: https://umijs.org/docs/routing
   routes: [
     {
@@ -72,6 +70,23 @@ export default defineConfig({
       icon: 'search',
       path: '/comic_crawler',
       component: './ComicCrawler/ListSearch',
+    },
+    {
+      name: 'comic.list',
+      icon: 'book',
+      path: '/comics',
+      component: './Comic/List',
+    },
+    {
+      name: 'comic.show',
+      path: '/comics/:id',
+      hideInMenu: true,
+      component: './Comic/Show',
+    },
+    {
+      path: '/comics/:id/:iid',
+      hideInMenu: true,
+      component: './Comic/Content',
     },
     {
       path: '/',

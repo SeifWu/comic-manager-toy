@@ -40,9 +40,9 @@ const Model: ModelType = {
       const response = yield call(saveComic, payload);
 
       if (response.success) {
-        message.success(response.message)
+        message.success(response.message);
       } else {
-        message.error(response.message)
+        message.error(response.message);
       }
     },
   },

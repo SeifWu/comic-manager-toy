@@ -59,8 +59,8 @@ const Login: React.FC<{}> = () => {
     try {
       // 登录
       const msg = await accountLogin({ ...values, type });
-      console.log(msg, "msg")
-      if (msg.errCode === "0") {
+      console.log(msg, 'msg');
+      if (msg.errCode === '0') {
         message.success('登录成功！');
         replaceGoto();
         setTimeout(() => {
@@ -77,7 +77,7 @@ const Login: React.FC<{}> = () => {
   };
 
   const { errCode, type: loginType } = userLoginState;
-  console.log(userLoginState)
+  console.log(userLoginState);
 
   return (
     <div className={styles.container}>
